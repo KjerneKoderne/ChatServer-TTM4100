@@ -5,8 +5,6 @@ import SocketServer
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
-payload = "payload.jason"
-response = ""
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
