@@ -5,6 +5,8 @@ import SocketServer
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
+payload = "payload.js"
+response = ""
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -28,6 +30,23 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             
             # TODO: Add handling of received payload from client
 
+    def login(payload):
+        pass
+
+    def logout(payload):
+        pass
+
+    def message(payload):
+        pass
+
+    def listNames(payload):
+        pass
+
+    def help(payload):
+        pass
+
+    def sendResponse(response):
+        pass   
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     """
