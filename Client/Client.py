@@ -2,6 +2,7 @@
 import socket
 from MessageReceiver import MessageReceiver
 from MessageParser import MessageParser
+import json
 
 request = ""
 content = ""

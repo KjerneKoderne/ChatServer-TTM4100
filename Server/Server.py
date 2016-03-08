@@ -2,6 +2,7 @@
 import SocketServer
 import json
 import time
+import datetime
 
 """
 Variables and functions that must be used by all the ClientHandler objects
@@ -38,44 +39,48 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             payload = recieved_content['content']
 
             if request == "login":
-            	login(payload)
+                login(payload)
             elif request == "logout":
-            	logout()
+                logout()
             elif request == "message":
-            	message(payload)
+                message(payload)
             elif request == "listNames":
-            	listNames()
+                listNames()
             elif request == "help":
-            	handleHelp()
+                handleHelp()
             else:
-                handleError()
+                handleError(errorType)
 
-    def login(payload):
+    def login(self, payload):
         if not payload in users:
             users[payload] = self
-            self.username = payload
-            handleResponse("message", "User" + payload + "successfully logged in!")
+            username = payload
+            handleResponse("message", "You successfully logged in!")
         else:
             handleError("Error: This user is already logged in...")
 
-    def logout():
-        if 
+    def logout(self):
+        if(username in users):
+            users.pop(username)
 
-    def message(payload):
+
+
+    def message(self, payload):
         pass
 
-    def listNames():
+    def listNames(self):
         pass
 
-    def handleHelp():
+    def handleHelp(self):
         pass
 
-    def handleResponse(response, content):
-        data = {'timestamp':time.time(),'sender':username 'response':response,'content':content}
+    def handleResponse(self, response, content):
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
+        data = {'timestamp':st,'sender':username, 'response':response,'content':content}
         payload = json.dumps(data)
         self.connection.send(payload)
 
-    def handleError(errorType):
+    def handleError(self, errorType):
         pass
 
 
