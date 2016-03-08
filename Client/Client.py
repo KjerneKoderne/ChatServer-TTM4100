@@ -36,7 +36,7 @@ class Client:
             content = liste[1]
         else:
             request = userInput
-            content = ""
+            content = None
 
         
     def disconnect(self):
