@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 import SocketServer
 import json
+import time
 
 """
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
+
+users = {}
+username = ""
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -14,6 +18,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
     only connected clients, and not the server itself. If you want to write
     logic for the server, you must write it outside this class
     """
+
 
     def handle(self):
         """
@@ -42,12 +47,19 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             	listNames()
             elif request == "help":
             	handleHelp()
+            else:
+                handleError()
 
     def login(payload):
-        pass
+        if not payload in users:
+            users[payload] = self
+            self.username = payload
+            handleResponse("message", "User" + payload + "successfully logged in!")
+        else:
+            handleError("Error: This user is already logged in...")
 
     def logout():
-        pass
+        if 
 
     def message(payload):
         pass
@@ -58,8 +70,14 @@ class ClientHandler(SocketServer.BaseRequestHandler):
     def handleHelp():
         pass
 
-    def sendResponse(response):
-        pass   
+    def handleResponse(response, content):
+        data = {'timestamp':time.time(),'sender':username 'response':response,'content':content}
+        payload = json.dumps(data)
+        self.connection.send(payload)
+
+    def handleError(errorType):
+        pass
+
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     """
