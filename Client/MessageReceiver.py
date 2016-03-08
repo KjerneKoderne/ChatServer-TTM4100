@@ -17,7 +17,16 @@ class MessageReceiver(Thread):
         self.daemon = True
 
         # TODO: Finish initialization of MessageReceiver
+        print'init MessageReceiver'
 
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
-        pass
+
+        received_string = self.connection.recv(4096)
+        recieved_content = json.loads(received_string)
+        print 'after json.loads client'
+
+        timestamp = recieved_content['timestamp']
+        sender = recieved_content['sender']
+        response = recieved_content['response']
+        content = recieved_content['content']

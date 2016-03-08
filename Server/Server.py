@@ -28,42 +28,47 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.ip = self.client_address[0]
         self.port = self.client_address[1]
         self.connection = self.request
+        print 'client connected'
 
         # Loop that listens for messages from the client
         while True:
+
+
             received_string = self.connection.recv(4096)
             # TODO: Add handling of received payload from client
             recieved_content = json.loads(received_string)
-
+            print 'after json.loads'
             request = recieved_content['request']
             payload = recieved_content['content']
 
             if request == "login":
-                login(payload)
+                print 'request located'
+                self.login(payload)
             elif request == "logout":
-                logout()
+                self.logout()
             elif request == "message":
-                message(payload)
+                self.message(payload)
             elif request == "listNames":
-                listNames()
+                self.listNames()
             elif request == "help":
-                handleHelp()
+                self.handleHelp()
             else:
-                handleError(errorType)
+                self.handleError(errorType)
 
     def login(self, payload):
         if not payload in users:
+            print 'request processed'
             users[payload] = self
             username = payload
-            handleResponse("message", "You successfully logged in!")
+            self.handleResponse("message", "You successfully logged in!")
+            print 'user logged in on server'
         else:
-            handleError("Error: This user is already logged in...")
+            self.handleError("Error: This user is already logged in...")
+            print 'user was already logged in'
 
     def logout(self):
         if(username in users):
             users.pop(username)
-
-
 
     def message(self, payload):
         pass
@@ -76,9 +81,10 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def handleResponse(self, response, content):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
-        data = {'timestamp':st,'sender':username, 'response':response,'content':content}
-        payload = json.dumps(data)
-        self.connection.send(payload)
+        data = {'timestamp':st,'sender':username,'response':response,'content':content}
+        package = json.dumps(data)
+        print users
+        self.connection.send(package)
 
     def handleError(self, errorType):
         pass

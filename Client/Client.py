@@ -7,7 +7,6 @@ import json
 request = ""
 content = ""
 data = ""
-payload = ""
 
 class Client:
     """
@@ -23,21 +22,27 @@ class Client:
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
         # TODO: Finish init process with necessary code
+        self.host = host
+        self.server_port = server_port
         self.run()
 
     def run(self):
         # Initiate the connection to the server
-        self.connection.connect((self.host, self.server_port))
 
-        userInput = raw_input("Choose command:")
-        liste = []
-        if " " in userInput:
-            liste = userInput.split(" ")
-            request = liste[0]
-            content = liste[1]
-        else:
-            request = userInput
-            content = None
+        self.connection.connect((self.host, self.server_port))
+        
+        while True:
+            userInput = raw_input("Choose command:")
+            liste = []
+            if " " in userInput:
+                liste = userInput.split(" ")
+                request = liste[0]
+                content = liste[1]
+            else:
+                request = userInput
+                content = None
+
+            self.send_payload(request, content)
 
         
     def disconnect(self):
@@ -48,17 +53,17 @@ class Client:
         # TODO: Handle incoming message
         pass
 
-    def send_payload(self, data):
+    def send_payload(self, request, content):
         # TODO: Handle sending of a payload
+        data = {'request':request,'content':content}
         payload = json.dumps(data)
         self.connection.send(payload)
-    
     # More methods may be needed!
 
     def createPayload(request, content):
         #eks. login(username) -> request(content)
         #skal gjøres om til json format og dumpes i payload.txt for sending
-        data = {'request':request,'content':content}    
+        pass
         
 
 
