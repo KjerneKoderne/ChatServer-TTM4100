@@ -21,7 +21,7 @@ class MessageParser():
             pass
 
     def parse_error(self, payload):
-        pass
+        return payload['content'] + "\n"
     
     def parse_info(self, payload):
         return payload['content'] +"\n"
@@ -30,6 +30,6 @@ class MessageParser():
         return payload['content'] +"\n"
 
     def parse_history(self, payload):
-        pass
+        return payload['content'] + "\n"
         
     # Include more methods for handling the different responses... 
