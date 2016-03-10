@@ -24,10 +24,10 @@ class MessageParser():
         pass
     
     def parse_info(self, payload):
-        return payload['content']
+        return payload['content'] +"\n"
 
     def parse_message(self, payload):
-        return payload['content']
+        return payload['content'] +"\n"
 
     def parse_history(self, payload):
         pass
