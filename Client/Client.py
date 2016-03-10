@@ -43,6 +43,7 @@ class Client:
                 content = None
 
             self.send_payload(request, content)
+            self.reciever = MessageReceiver( , self.connection) 
 
         
     def disconnect(self):
@@ -50,8 +51,6 @@ class Client:
         pass
 
     def receive_message(self, message):
-        # TODO: Handle incoming message
-        # Meninga å ta i MessageReciever for å processe incoming messages?
         pass
 
     def send_payload(self, request, content):
@@ -60,11 +59,6 @@ class Client:
         payload = json.dumps(data)
         self.connection.send(payload)
     # More methods may be needed!
-
-    def createPayload(request, content):
-        #eks. login(username) -> request(content)
-        #skal gjøres om til json format og dumpes i payload.txt for sending
-        pass
         
 
 
