@@ -53,7 +53,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             elif request == "help":
                 self.handleHelp()
             else:
-                self.handleError(errorType)
+                self.handleError("Incorrect command!")
 
     def login(self, payload):
         if not payload in users:
@@ -87,7 +87,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.connection.send(package)
 
     def handleError(self, errorType):
-        pass
+        self.handleResponse("error", errorType)
 
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):

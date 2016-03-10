@@ -30,7 +30,7 @@ class Client:
         # Initiate the connection to the server
 
         self.connection.connect((self.host, self.server_port))
-        
+
         while True:
             userInput = raw_input("Choose command:")
             liste = []
@@ -51,7 +51,7 @@ class Client:
 
     def receive_message(self, message):
         # TODO: Handle incoming message
-        pass
+        # Meninga å ta i MessageReciever for å processe incoming messages?
 
     def send_payload(self, request, content):
         # TODO: Handle sending of a payload

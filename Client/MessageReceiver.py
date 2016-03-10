@@ -18,6 +18,7 @@ class MessageReceiver(Thread):
 
         # TODO: Finish initialization of MessageReceiver
         print'init MessageReceiver'
+        self.run()
 
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
