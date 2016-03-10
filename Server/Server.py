@@ -10,6 +10,7 @@ must be written here (e.g. a dictionary for connected clients)
 """
 
 users = {}
+user_ip = {}
 username = ""
 
 class ClientHandler(SocketServer.BaseRequestHandler):
@@ -60,6 +61,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             print 'request processed'
             users[payload] = self
             username = payload
+            user_ip[self.ip] = username
             self.handleResponse("message", "You successfully logged in!")
             print 'user logged in on server'
         else:
@@ -68,12 +70,13 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def logout(self):
         if(username in users):
-            users.pop(username)
+            users.remove(username)
 
     def message(self, payload):
         pass
 
     def listNames(self):
+
         pass
 
     def handleHelp(self):
@@ -84,6 +87,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         data = {'timestamp':st,'sender':username,'response':response,'content':content}
         package = json.dumps(data)
         print users
+        print user_ip
         self.connection.send(package)
 
     def handleError(self, errorType):
@@ -106,7 +110,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server

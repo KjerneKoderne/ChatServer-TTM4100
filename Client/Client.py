@@ -52,6 +52,7 @@ class Client:
     def receive_message(self, message):
         # TODO: Handle incoming message
         # Meninga å ta i MessageReciever for å processe incoming messages?
+        pass
 
     def send_payload(self, request, content):
         # TODO: Handle sending of a payload
