@@ -3,6 +3,7 @@ import SocketServer
 import json
 import time
 import datetime
+import re
 
 """
 Variables and functions that must be used by all the ClientHandler objects
@@ -57,16 +58,20 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.handleError("Incorrect command!")
 
     def login(self, payload):
-        if not payload in users:
-            print 'request processed'
-            users[payload] = self
-            username = payload
-            user_ip[self.ip] = username
-            self.handleResponse("info", "You successfully logged in!")
-            print 'user logged in on server'
+        if re.match("^[A-Za-z0-9]*$", payload):
+            if not payload in users:
+                print 'request processed'
+                users[payload] = self
+                username = payload
+                user_ip[self.ip] = username
+                self.handleResponse("info", "You successfully logged in!")
+                print 'user logged in on server'
+            else:
+                self.handleError("Error: This user is already logged in...")
+                print 'user was already logged in'
         else:
-            self.handleError("Error: This user is already logged in...")
-            print 'user was already logged in'
+            self.handleError("Error: Your username is not valid, please use only characters or numbers...")
+            print 'invalid username'
 
     def logout(self):
         if(username in users):
