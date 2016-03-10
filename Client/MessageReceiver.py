@@ -22,12 +22,7 @@ class MessageReceiver(Thread):
 
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
-        
-        received_string = self.connection.recv(4096)
-        recieved_content = json.loads(received_string)
-        print 'after json.loads client'
-
-        timestamp = recieved_content['timestamp']
-        sender = recieved_content['sender']
-        response = recieved_content['response']
-        content = recieved_content['content']
+        while True:
+            received_string = self.connection.recv(4096)
+            if(received_string):
+                self.client.receive_message(received_string)

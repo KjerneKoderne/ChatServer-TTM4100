@@ -30,20 +30,28 @@ class Client:
         # Initiate the connection to the server
 
         self.connection.connect((self.host, self.server_port))
-
+        Threads = []
         while True:
             userInput = raw_input("Choose command:")
             liste = []
             if " " in userInput:
+                content = ""
                 liste = userInput.split(" ")
                 request = liste[0]
-                content = liste[1]
+                for i in range(1, len(liste)):
+                    content += liste[i]
+                    if(i != len(liste)-1):
+                        content += " "
             else:
                 request = userInput
                 content = None
 
             self.send_payload(request, content)
-            self.reciever = MessageReceiver(self , self.connection)
+            reciever = MessageReceiver(self, self.connection)
+            reciever.daemon = True
+            reciever.start()
+            print "MessageReciever:", reciever.name
+
 
         
     def disconnect(self):
@@ -51,7 +59,10 @@ class Client:
         pass
 
     def receive_message(self, message):
-        pass
+        parser = MessageParser()
+        messageType = parser.parse(message)
+        print messageType
+
 
     def send_payload(self, request, content):
         # TODO: Handle sending of a payload

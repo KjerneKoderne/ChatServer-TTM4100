@@ -47,7 +47,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.login(payload)
             elif request == "logout":
                 self.logout()
-            elif request == "message":
+            elif request == "msg":
                 self.message(payload)
             elif request == "listNames":
                 self.listNames()
@@ -62,7 +62,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             users[payload] = self
             username = payload
             user_ip[self.ip] = username
-            self.handleResponse("message", "You successfully logged in!")
+            self.handleResponse("info", "You successfully logged in!")
             print 'user logged in on server'
         else:
             self.handleError("Error: This user is already logged in...")
@@ -73,7 +73,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             users.remove(username)
 
     def message(self, payload):
-        pass
+        print 'request processed'
+        self.handleResponse("msg", payload)
 
     def listNames(self):
 
