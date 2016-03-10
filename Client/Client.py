@@ -43,7 +43,7 @@ class Client:
                 content = None
 
             self.send_payload(request, content)
-            self.reciever = MessageReceiver( , self.connection) 
+            self.reciever = MessageReceiver(self , self.connection)
 
         
     def disconnect(self):
