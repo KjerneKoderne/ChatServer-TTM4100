@@ -58,20 +58,21 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.handleError("Incorrect command!")
 
     def login(self, payload):
-        if re.match("^[A-Za-z0-9]*$", payload):
-            if not payload in users:
+
+        if not payload in users and not self in users.values():
+            if re.match("^[A-Za-z0-9]*$", payload):
                 print 'request processed'
                 users[payload] = self
-                username = payload
+                self.username = payload
                 user_ip[self.ip] = username
                 self.handleResponse("info", "You successfully logged in!")
                 print 'user logged in on server'
             else:
-                self.handleError("Error: This user is already logged in...")
-                print 'user was already logged in'
+                self.handleError("Error: Your username is not valid, please use only characters or numbers...")
+                print 'invalid username'
         else:
-            self.handleError("Error: Your username is not valid, please use only characters or numbers...")
-            print 'invalid username'
+                self.handleError("Error: You can only log on as one user...")
+                print 'user was already logged in'
 
     def logout(self):
         if(username in users):
@@ -90,7 +91,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def handleResponse(self, response, content):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
-        data = {'timestamp':st,'sender':username,'response':response,'content':content}
+        data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
         print users
         print user_ip
