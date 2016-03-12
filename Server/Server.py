@@ -13,6 +13,7 @@ must be written here (e.g. a dictionary for connected clients)
 users = {}
 user_ip = {}
 username = ""
+messageList = []
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -67,6 +68,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 user_ip[self.ip] = username
                 self.handleResponse("info", "You successfully logged in!")
                 print 'user logged in on server'
+                history = ""
+                if(len(messageList)>0):
+                    for message in messageList:
+                        history += message
+                    self.handleResponse("history", history)
             else:
                 self.handleError("Error: Your username is not valid, please use only characters or numbers...")
                 print 'invalid username'
@@ -96,14 +102,13 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
         data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
-        print users
-        print user_ip
         self.connection.send(package)
 
     def sendMessage(self, response, content):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
         data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
+        messageList.append("[" + st + "] " + self.username + ": " + content + "\n")
         for value in users.values():
             value.connection.send(package)
 

@@ -30,6 +30,6 @@ class MessageParser():
         return "[" + payload['timestamp'] + "] " + payload['sender'] + ": " + payload['content']
 
     def parse_history(self, payload):
-        return payload['content'] + "\n"
+        return payload['content']
         
     # Include more methods for handling the different responses... 
