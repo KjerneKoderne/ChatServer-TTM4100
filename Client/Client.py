@@ -33,7 +33,6 @@ class Client:
         self.connection.connect((self.host, self.server_port))
         Threads = []
         while True:
-            time.sleep(0.5)
             userInput = raw_input("")
             liste = []
             if " " in userInput:
