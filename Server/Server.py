@@ -4,7 +4,7 @@ import json
 import time
 import datetime
 import re
-
+ 
 """
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
@@ -71,19 +71,22 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.handleError("Error: Your username is not valid, please use only characters or numbers...")
                 print 'invalid username'
         else:
-                self.handleError("Error: You can only log on as one user...")
-                print 'user was already logged in'
+            self.handleError("Error: You can only log on as one user...")
+            print 'user was already logged in'
 
     def logout(self):
-        if(username in users):
-            users.remove(username)
+        if self in users.values():
+            self.handleResponse("info", "You've successfully logged out!")
+            users.pop(self.username, None)
+        else:
+            self.handleError("Error: Your logout did not succeed...")
 
     def message(self, payload):
         print 'request processed'
-        self.handleResponse("msg", payload)
+        self.sendMessage("message", payload)
 
     def listNames(self):
-
+        #test
         pass
 
     def handleHelp(self):
@@ -96,6 +99,13 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         print users
         print user_ip
         self.connection.send(package)
+
+    def sendMessage(self, response, content):
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
+        data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
+        package = json.dumps(data)
+        for value in users.values():
+            value.connection.send(package)
 
     def handleError(self, errorType):
         self.handleResponse("error", errorType)
@@ -117,7 +127,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server
