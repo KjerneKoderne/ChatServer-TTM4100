@@ -47,11 +47,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             if request == "login":
                 print 'request located'
                 self.login(payload)
-            elif request == "logout" and self in user.values():
+            elif request == "logout" and self in users.values():
                 self.logout()
-            elif request == "msg" and self in user.values():
+            elif request == "msg" and self in users.values():
                 self.message(payload)
-            elif request == "names" and self in user.values():
+            elif request == "names" and self in users.values():
                 self.listNames()
             elif request == "help":
                 self.handleHelp()
