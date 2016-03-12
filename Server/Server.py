@@ -71,8 +71,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.handleError("Error: Your username is not valid, please use only characters or numbers...")
                 print 'invalid username'
         else:
-                self.handleError("Error: You can only log on as one user...")
-                print 'user was already logged in'
+            self.handleError("Error: You can only log on as one user...")
+            print 'user was already logged in'
 
     def logout(self):
         if(username in users):
