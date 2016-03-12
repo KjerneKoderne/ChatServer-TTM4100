@@ -75,8 +75,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             print 'user was already logged in'
 
     def logout(self):
-        if(username in users):
-            users.remove(username)
+        if self in users.values():
+            self.handleResponse("info", "You've successfully logged out!")
+            users.pop(self.username, None)
+        else:
+            self.handleError("Error: Your logout did not succeed...")
 
     def message(self, payload):
         print 'request processed'

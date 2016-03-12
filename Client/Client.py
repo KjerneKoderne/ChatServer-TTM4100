@@ -47,6 +47,9 @@ class Client:
                 content = None
 
             self.send_payload(request, content)
+            if request == "logout":
+                disconnect()
+
             reciever = MessageReceiver(self, self.connection)
             reciever.daemon = True
             reciever.start()
@@ -55,8 +58,8 @@ class Client:
 
         
     def disconnect(self):
-        # TODO: Handle disconnection
-        pass
+        self.connection.close()
+        exit()
 
     def receive_message(self, message):
         parser = MessageParser()
