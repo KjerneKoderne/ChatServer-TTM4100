@@ -98,8 +98,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.connection.send(package)
 
     def sendMessage(self, response, content):
-        #test
-
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
+        data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
+        package = json.dumps(data)
+        for value in users.values():
+            value.
     def handleError(self, errorType):
         self.handleResponse("error", errorType)
 
