@@ -80,7 +80,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def message(self, payload):
         print 'request processed'
-        self.handleResponse("msg", payload)
+        self.sendMessage("msg", payload)
 
     def listNames(self):
         #test
@@ -96,6 +96,9 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         print users
         print user_ip
         self.connection.send(package)
+
+    def sendMessage(self, response, content):
+        #test
 
     def handleError(self, errorType):
         self.handleResponse("error", errorType)
