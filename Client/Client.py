@@ -48,7 +48,7 @@ class Client:
 
             self.send_payload(request, content)
             if request == "logout":
-                disconnect()
+                self.disconnect()
 
             reciever = MessageReceiver(self, self.connection)
             reciever.daemon = True
