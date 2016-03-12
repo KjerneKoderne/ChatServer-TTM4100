@@ -6,14 +6,13 @@ class MessageParser():
         self.possible_responses = {
             'error': self.parse_error,
             'info': self.parse_info,
-            'msg': self.parse_message,
+            'message': self.parse_message,
             'history': self.parse_history,
 	    # More key:values pairs are needed	
         }
 
     def parse(self, payload):
         payload = json.loads(payload)
-        print payload
     
         if payload['response'] in self.possible_responses:
             return self.possible_responses[payload['response']](payload)

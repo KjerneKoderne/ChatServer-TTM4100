@@ -83,7 +83,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def message(self, payload):
         print 'request processed'
-        self.sendMessage("msg", payload)
+        self.sendMessage("message", payload)
 
     def listNames(self):
         #test
