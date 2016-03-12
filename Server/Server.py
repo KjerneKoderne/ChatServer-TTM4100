@@ -102,8 +102,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
 
     def handleHelp(self):
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
         listOfCommands = "login <username>\nlogout\nmsg <message>\nnames\nhelp"
-        self.handleResponse("info", listOfCommands)
+        data = {'timestamp':st,'sender':'chatserver','response':'info','content':listOfCommands}
+        package = json.dumps(data)
+        self.connection.send(package)
 
     def handleResponse(self, response, content):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
@@ -120,7 +123,10 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             value.connection.send(package)
 
     def handleError(self, errorType):
-        self.handleResponse("error", errorType)
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
+        data = {'timestamp':st,'sender':'chatserver','response':'error','content':errorType}
+        package = json.dumps(data)
+        self.connection.send(package)
 
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
