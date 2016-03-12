@@ -47,16 +47,16 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             if request == "login":
                 print 'request located'
                 self.login(payload)
-            elif request == "logout":
+            elif request == "logout" and self in user.values():
                 self.logout()
-            elif request == "msg":
+            elif request == "msg" and self in user.values():
                 self.message(payload)
-            elif request == "listNames":
+            elif request == "names" and self in user.values():
                 self.listNames()
             elif request == "help":
                 self.handleHelp()
             else:
-                self.handleError("Incorrect command!")
+                self.handleError("Incorrect command! Type 'help' for commands")
 
     def login(self, payload):
 
@@ -102,7 +102,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
 
     def handleHelp(self):
-        pass
+        listOfCommands = "login <username>\nlogout\nmsg <message>\nnames\nhelp"
+        self.handleResponse("info", listOfCommands)
 
     def handleResponse(self, response, content):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
