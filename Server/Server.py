@@ -102,7 +102,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
         for value in users.values():
-            value.
+            value.connection.send(package)
+        
     def handleError(self, errorType):
         self.handleResponse("error", errorType)
 
