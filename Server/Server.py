@@ -4,7 +4,7 @@ import json
 import time
 import datetime
 import re
-
+ 
 """
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
@@ -83,7 +83,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.handleResponse("msg", payload)
 
     def listNames(self):
-
+        #test
         pass
 
     def handleHelp(self):
