@@ -47,14 +47,14 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             if request == "login":
                 print 'request located'
                 self.login(payload)
+            elif request == "help":
+                self.handleHelp()
             elif request == "logout" and self in users.values():
                 self.logout()
             elif request == "msg" and self in users.values():
                 self.message(payload)
             elif request == "names" and self in users.values():
                 self.listNames()
-            elif request == "help":
-                self.handleHelp()
             else:
                 self.handleError("Incorrect command! Type 'help' for commands")
 
