@@ -92,8 +92,14 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.sendMessage("message", payload)
 
     def listNames(self):
-        #test
-        pass
+        listOfNames = ""
+        tempArray = users.keys()
+        for names in tempArray:
+            listOfNames += names
+            listOfNames += "\n"
+        self.handleResponse("info", listOfNames)
+        print 'user ' + self.username + ' requested list of logged in users.'
+
 
     def handleHelp(self):
         pass
