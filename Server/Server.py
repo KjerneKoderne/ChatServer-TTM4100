@@ -105,7 +105,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
         for value in users.values():
-            value.
+            value.connection.send(package)
+
     def handleError(self, errorType):
         self.handleResponse("error", errorType)
 
@@ -126,7 +127,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server

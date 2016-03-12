@@ -13,6 +13,7 @@ class MessageParser():
 
     def parse(self, payload):
         payload = json.loads(payload)
+        print payload
     
         if payload['response'] in self.possible_responses:
             return self.possible_responses[payload['response']](payload)
@@ -27,7 +28,7 @@ class MessageParser():
         return payload['content'] +"\n"
 
     def parse_message(self, payload):
-        return payload['sender'] + ": " + payload['content'] +"\n"
+        return "[" + payload['timestamp'] + "] " + payload['sender'] + ": " + payload['content'] +"\n"
 
     def parse_history(self, payload):
         return payload['content'] + "\n"
