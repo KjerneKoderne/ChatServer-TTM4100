@@ -54,7 +54,6 @@ class Client:
             reciever = MessageReceiver(self, self.connection)
             reciever.daemon = True
             reciever.start()
-            print "MessageReciever:", reciever.name
 
 
         
