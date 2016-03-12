@@ -3,6 +3,7 @@ import socket
 from MessageReceiver import MessageReceiver
 from MessageParser import MessageParser
 import json
+import time
 
 request = ""
 content = ""
@@ -32,6 +33,7 @@ class Client:
         self.connection.connect((self.host, self.server_port))
         Threads = []
         while True:
+            time.sleep(0.5)
             userInput = raw_input("Choose command:")
             liste = []
             if " " in userInput:
@@ -83,4 +85,4 @@ if __name__ == '__main__':
 
     No alterations are necessary
     """
-    client = Client('192.168.1.110', 9998)
+    client = Client('192.168.1.109', 9998)
