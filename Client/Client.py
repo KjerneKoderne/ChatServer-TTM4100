@@ -34,7 +34,7 @@ class Client:
         Threads = []
         while True:
             time.sleep(0.5)
-            userInput = raw_input("Choose command:")
+            userInput = raw_input("")
             liste = []
             if " " in userInput:
                 content = ""
