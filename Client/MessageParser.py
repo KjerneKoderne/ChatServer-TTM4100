@@ -30,6 +30,10 @@ class MessageParser():
         return "[" + payload['timestamp'] + "] " + payload['sender'] + ": " + payload['content']
 
     def parse_history(self, payload):
-        return payload['content']
+        history = ""
+        for element in payload['content']:
+            dictionary = json.loads(element)
+            history += "[" + dictionary['timestamp'] + "] " + dictionary['sender'] + ": " + dictionary['content'] + "\n"
+        return history
         
     # Include more methods for handling the different responses... 

@@ -29,9 +29,7 @@ class Client:
 
     def run(self):
         # Initiate the connection to the server
-
         self.connection.connect((self.host, self.server_port))
-        Threads = []
         while True:
             userInput = raw_input("")
             liste = []
@@ -58,8 +56,7 @@ class Client:
 
         
     def disconnect(self):
-        self.connection.close()
-        exit()
+        self.connection.shutdown(socket.SHUT_RDWR)
 
     def receive_message(self, message):
         parser = MessageParser()
@@ -83,4 +80,4 @@ if __name__ == '__main__':
 
     No alterations are necessary
     """
-    client = Client('192.168.1.110', 9998)
+    client = Client('10.20.54.145', 30000)

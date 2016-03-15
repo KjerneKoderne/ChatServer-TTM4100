@@ -69,10 +69,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 self.handleResponse("info", "You successfully logged in!")
                 print 'user logged in on server'
                 history = ""
-                if(len(messageList)>0):
-                    for message in messageList:
-                        history += message
-                    self.handleResponse("history", history)
+                self.handleResponse("history", messageList)
             else:
                 self.handleError("Error: Your username is not valid, please use only characters or numbers...")
                 print 'invalid username'
@@ -118,7 +115,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y %H:%M:%S')
         data = {'timestamp':st,'sender':self.username,'response':response,'content':content}
         package = json.dumps(data)
-        messageList.append("[" + st + "] " + self.username + ": " + content + "\n")
+        messageList.append(package)
         for value in users.values():
             value.connection.send(package)
 
